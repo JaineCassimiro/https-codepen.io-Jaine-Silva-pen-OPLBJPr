@@ -1,16 +1,783 @@
-workspace.xml
-junitvmwatcher*.properties
-build.properties
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Lidar com as Emoções</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fef8e7;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-# generated java classes and java source files
-#   manually add any custom artifacts that can't be generated from the models
-#   http://confluence.jetbrains.com/display/MPSD25/HowTo+--+MPS+and+Git
-classes_gen
-source_gen
-source_gen.caches
+        h1, h2 {
+            color: #ffc107;
+        }
 
-# generated test code and test results
-test_gen
-test_gen.caches
-TEST-*.xml
-junit*.properties
+        strong {
+            color: #ff9800;
+        }
+
+        .cta-buttons button {
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-buttons button:hover {
+            background-color: #ffa000;
+            transform: scale(1.1);
+        }
+
+        .motivational {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffc107;
+        }
+
+        canvas {
+            background: #fef4d1;
+            border: 2px solid #ffc107;
+            display: block;
+            margin: 20px auto;
+        }
+
+        footer {
+            text-align: center;
+            background: #333;
+            color: #fff;
+            padding: 20px 10px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            height: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #ffc107;
+            width: 0%;
+            transition: width 0.25s ease-in-out;
+        }
+
+        .sorteio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .sorteio-container h2 {
+            color: #ff9800;
+            margin-bottom: 15px;
+        }
+
+        .sorteio-container input,
+        .sorteio-container textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .sorteio-container button {
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .sorteio-container button:hover {
+            background-color: #ffa000;
+            transform: scale(1.05);
+        }
+
+        .sorteio-feedback {
+            display: none;
+            margin-top: 15px;
+            color: #28a745;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .alerta-crise {
+            background: #ffeb3b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .alerta-crise strong {
+            color: #e53935;
+        }
+
+        .interactive-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff9800;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .interactive-button:hover {
+            background-color: #e67e22;
+            transform: translateY(-3px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+ 
+    <header>
+        <nav>
+            <h1><span class="girassol-icon"></span> Como Lidar com as Emoções</h1>
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre Nós</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#sos">SOS</a></li>
+                <li><a href="#crise">Momentos de Crise</a></li>
+                <li><a href="#refugio">Meu Refúgio Literário</a></li>
+                <li><a href="#jogo">Joguinho</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Seção Inicial -->
+        <section id="inicio">
+            <h2>Bem-vindo ao seu espaço emocional seguro</h2>
+            <p>Ferramentas, informações e apoio para lidar com suas emoções.</p>
+            <div class="cta-buttons">
+                <button onclick="scrollToSection('recursos')">Comece Agora</button>
+                <button onclick="scrollToSection('sos')">Preciso de Ajuda</button>
+            </div>
+            <div class="motivational">🌻 <strong>Não desista!</strong> Você é mais forte do que imagina. 🌻</div>
+        </section>
+
+        <!-- Recursos do Usuário -->
+        <section id="recursos">
+            <h2>🌟 Recursos para Ajudá-lo 🌟</h2>
+            <h3>Instruções Passo a Passo:</h3>
+            <ul>
+                <li>Respire fundo. Inspire pelo nariz e expire pela boca.</li>
+                <li>Tente identificar 3 coisas que você pode ver ao seu redor.</li>
+            </ul>
+            <h3>Frases Confortantes:</h3>
+            <ul>
+                <li>Você está seguro agora.</li>
+                <li>Seus sentimentos são válidos. Respire e vá com calma.</li>
+            </ul>
+            <h3>Botão de Áudio:</h3>
+            <p>
+                <button onclick="playAudio()" class="interactive-button">Ouvir Narração Guiada</button>
+            </p>
+            <h3>Diário de Emoções com Alertas:</h3>
+            <p>Registre diariamente como você se sente. Receba sugestões caso algo fora do padrão seja detectado.</p>
+            <h3>Localizador de Serviços de Saúde Mental:</h3>
+            <p>Permita acesso ao GPS para encontrar clínicas, psicólogos e grupos de apoio próximos.</p>
+            <button class="interactive-button">Buscar Serviços Próximos</button>
+            <h3>Modo SOS:</h3>
+            <ul>
+                <li>Chame ajuda rapidamente.</li>
+                <li>Use técnicas de aterramento com vídeos e áudios.</li>
+                <li>Envie sua localização para contatos de confiança.</li>
+            </ul>
+            <h3>Recurso de Lembretes:</h3>
+            <ul>
+                <li>Exibe mensagens personalizadas na tela, como "Você está em casa. Está tudo bem."</li>
+                <li>Notificações para tomar medicação ou praticar autocuidado.</li>
+            </ul>
+            <h3>Integração com Assistentes Virtuais:</h3>
+            <p>Comandos para Google Assistant ou Alexa, como:</p>
+            <ul>
+                <li>"Ajude-me a acalmar."</li>
+                <li>"Ligue para ''nome do contato''."</li>
+            </ul>
+            <h3>Botão de Fechamento Seguro:</h3>
+            <p>Redireciona para uma página genérica em caso de desconforto.</p>
+        </section>
+
+        <!-- Alerta de Crise -->
+        <section id="alerta-crise">
+            <div class="alerta-crise">
+                <h2>🚨 Meu Alerta de Crise</h2>
+                <p><strong>Sintomas de uma crise:</strong></p>
+                <ul>
+                    <li>Sensação de ansiedade intensa.</li>
+                    <li>Falta de ar ou sensação de sufocamento.</li>
+                    <li>Palpitações ou coração acelerado.</li>
+                    <li>Tontura ou confusão mental.</li>
+                    <li>Sensação de perda de controle.</li>
+                </ul>
+                <p>🌟 Lembre-se: você não está sozinho. Respire fundo e procure ajuda se necessário. 🌟</p>
+                <a href="#sos" class="interactive-button">Preciso de Ajuda Agora</a>
+            </div>
+        </section>
+
+        <!-- Sobre Nós -->
+        <section id="sobre">
+            <h2>Sobre Nós</h2>
+            <p>Prazer, sou <strong>Jaine Silva</strong>, uma pessoa atípica que entende como é passar por momentos difíceis. Este site é minha contribuição para que você nunca se sinta sozinho em sua jornada emocional.</p>
+            <p><em>"Pés, para que os quero, se tenho asas para voar?" - Frida Kahlo</em></p>
+        </section>
+
+        <!-- Joguinho -->
+        <section id="jogo">
+            <h2>🌻 Joguinho dos Girassóis 🌻</h2>
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            <p>Use as setas do teclado para mover o personagem e colete os girassóis para acumular pontos!</p>
+            <p id="motivational-phrase" class="motivational">🌟 Vamos lá! Cada girassol é uma vitória! 🌟</p>
+        </section>
+
+        <!-- Meu Refúgio Literário -->
+        <section id="refugio">
+            <div class="refugio-container">
+                <h2>📚 Meu Refúgio Literário 📚</h2>
+                <p>Encontre inspirações, histórias e leituras que podem acalmar sua mente e nutrir sua alma.</p>
+                <button onclick="abrirRefugioLiterario()">Acessar Leituras</button>
+            </div>
+        </section>
+
+        <!-- Contato -->
+        <section id="contato">
+            <div class="sorteio-container">
+                <h2>🌻 Participe e Fale Conosco 🌻</h2>
+                <form id="form-contato" onsubmit="return validarFormulario(event)">
+                    <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
+                    <input type="email" id="email" name="email" placeholder="Seu E-mail" required>
+                    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Sua Mensagem" required></textarea>
+                    <input type="file" id="anexo" name="anexo" accept="image/*,application/pdf">
+                    <button type="submit">Enviar</button>
+                </form>
+                <div class="sorteio-feedback" id="sorteio-feedback">🌟 Obrigado por participar! 🌟</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Você não está sozinho. Estamos aqui para te ouvir e te apoiar.</p>
+        <p>Sua saúde mental importa. Cuide de você e peça ajuda quando precisar.</p>
+        <p>Falar sobre seus sentimentos é um ato de coragem e cuidado.</p>
+        <p>Saúde mental é importante todos os dias. 🌻</p>
+        <p>&copy; 2025 Criado por Jaine Silva - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const motivationalPhrases = [
+            "Você está indo muito bem! 🌻",
+            "Cada passo é importante! 🌟",
+            "Continue assim, você é incrível! 🌻",
+            "Acredite no seu potencial! 🌟",
+            "Você está vencendo seus desafios! 🌻"
+        ];
+
+        let player = { x: 50, y: 200, width: 30, height: 30, color: 'blue' };
+        let sunflower = { x: 600, y: 200, width: 20, height: 20, color: 'yellow' };
+        let score = 0;
+
+        document.addEventListener('keydown', movePlayer);
+
+        function movePlayer(e) {
+            if (e.key === 'ArrowUp') player.y -= 10;
+            if (e.key === 'ArrowDown') player.y += 10;
+            if (e.key === 'ArrowLeft') player.x -= 10;
+            if (e.key === 'ArrowRight') player.x += 10;
+            checkCollision();
+            drawGame();
+        }
+
+        function checkCollision() {
+            if (
+                player.x < sunflower.x + sunflower.width &&
+                player.x + player.width > sunflower.x &&
+                player.y < sunflower.y + sunflower.height &&
+                player.y + player.height > sunflower.y
+            ) {
+                score++;
+                sunflower.x = Math.random() * (canvas.width - sunflower.width);
+                sunflower.y = Math.random() * (canvas.height - sunflower.height);
+                updateMotivationalPhrase();
+                showFloatingMessage("Bom trabalho! 🌻");
+            }
+        }
+
+        function updateMotivationalPhrase() {
+            const phrase = motivationalPhrases[Math.floor(Math.random() * motivationalPhrases.length)];
+            document.getElementById('motivational-phrase').textContent = phrase;
+        }
+
+        function showFloatingMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.style.position = 'absolute';
+            messageElement.style.left = `${player.x + 20}px`;
+            messageElement.style.top = `${player.y - 20}px`;
+            messageElement.style.background = 'rgba(255, 215, 0, 0.9)';
+            messageElement.style.color = 'black';
+            messageElement.style.padding = '5px 10px';
+            messageElement.style.borderRadius = '5px';
+            messageElement.style.fontSize = '0.9rem';
+            document.body.appendChild(messageElement);
+            setTimeout(() => document.body.removeChild(messageElement), 2000);
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            ctx.fillStyle = sunflower.color;
+            ctx.fillRect(sunflower.x, sunflower.y, sunflower.width, sunflower.height);
+
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText('Pontuação: ' + score, 10, 20);
+        }
+
+        drawGame();
+        function abrirRefugioLiterario() {
+            alert("Bem-vindo ao Meu Refúgio Literário! Em breve, você terá acesso a uma seleção especial de leituras inspiradoras.");
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function validarFormulario(event) {
+            event.preventDefault();
+            const feedback = document.getElementById('sorteio-feedback');
+            feedback.style.display = 'block';
+            setTimeout(() => feedback.style.display = 'none', 5000);
+            document.getElementById('form-contato').reset();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.style.backgroundColor = '#333';
+                document.body.style.color = '#fff';
+            } else {
+                document.body.style.backgroundColor = '#fef8e7';
+                document.body.style.color = '#333';
+            }
+        }
+
+        function playAudio() {
+            const audio = new Audio('calm-guidance.mp3');
+            audio.play();
+        }
+
+        // Atualização da barra de progresso
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melhorias - Como Lidar com as Emoções</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h2 {
+            color: #ffc107;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .feature {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .feature h3 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            margin-bottom: 15px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ffc107;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #ff9800;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .feedback-form button {
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .feedback-form button:hover {
+            background-color: #ff9800;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffff33;
+        }
+
+        body.dark-mode .feature {
+            background: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .feature h3 {
+            color: #ffff33;
+        }
+
+        body.dark-mode .button {
+            background-color: #3333ff;
+            color: #ffff33;
+        }
+
+        body.dark-mode .button:hover {
+            background-color: #4444ff;
+        }
+
+    </style>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <button onclick="toggleDarkMode()" aria-label="Alternar entre modo claro e escuro" style="position: fixed; top: 20px; right: 20px; padding: 10px 20px; border: none; background: #ffc107; color: #fff; cursor: pointer; border-radius: 5px;">Alternar Modo Escuro</button>
+    <h2>Melhorias e Recursos Adicionais</h2>
+
+    <div class="container">
+        <div class="feature">
+            <h3>Centros de Atenção Psicossocial (CAPS)</h3>
+            <p>Os Centros de Atenção Psicossocial (CAPS) oferecem suporte à saúde mental através de atividades diversificadas que promovem o bem-estar e a reintegração social.</p>
+            <h4>Atividades Disponíveis:</h4>
+            <ul>
+                <li><strong>Artesanato:</strong> Auxilia na expressão criativa e no relaxamento, sendo uma forma de terapia ocupacional eficaz.</li>
+                <li><strong>Cinema:</strong> Sessões de filmes seguidas de debates ajudam a estimular o pensamento crítico e a interação social.</li>
+                <li><strong>Conversas:</strong> Espaços para diálogos abertos e trocas de experiências em grupo, promovendo suporte emocional.</li>
+                <li><strong>Terapia de Grupo:</strong> Atividades conduzidas por profissionais para trabalhar questões específicas e criar um ambiente de apoio.</li>
+            </ul>
+        </div>
+
+        <div class="feature">
+            <h3>Terapia Focada na Mulher</h3>
+            <p>O CAPS também oferece terapias especialmente voltadas para mulheres, com o objetivo de aumentar a autoestima, ajudar a lidar com sentimentos e promover a valorização pessoal.</p>
+            <h4>Atividades Inclusas:</h4>
+            <ul>
+                <li><strong>Workshops de Autocuidado:</strong> Focados em autocuidado físico e emocional, ajudando as mulheres a se sentirem valorizadas e empoderadas.</li>
+                <li><strong>Embelezamento:</strong> Ações que incluem cuidados estéticos como cabelo e maquiagem para elevar a autoestima.</li>
+                <li><strong>Educação Emocional:</strong> Sessões que ensinam formas de lidar com sentimentos e desenvolver a resiliência emocional.</li>
+            </ul>
+            <p>Essas atividades ajudam a criar uma rede de apoio para que as mulheres possam enfrentar desafios emocionais de forma mais confiante.</p>
+        </div>
+
+        <div class="feature">
+            <h3>Sugestões de Apps Úteis</h3>
+            <p>Inclua a tecnologia no seu dia a dia com apps que auxiliam na saúde mental e organização emocional:</p>
+            <ul>
+                <li><strong>Calm:</strong> App para meditação e técnicas de respiração guiada.</li>
+                <li><strong>Headspace:</strong> Ferramenta para mindfulness e gerenciamento do estresse.</li>
+                <li><strong>Todoist:</strong> Ajuda na organização de tarefas, diminuindo a sobrecarga mental.</li>
+                <li><strong>Daylio:</strong> Um diário visual para registrar seu humor e atividades diárias.</li>
+                <li><strong>MindShift CBT:</strong> Focado em reduzir ansiedade usando terapia cognitivo-comportamental.</li>
+            </ul>
+            <a href="#" class="button">Explorar Apps Recomendados</a>
+        </div>
+
+        <div class="feature">
+            <h3>Sistema de Indicador de Humor</h3>
+            <p>Permita que os usuários registrem como estão se sentindo diariamente em uma escala de 1 a 10. Isso ajuda a monitorar o estado emocional ao longo do tempo.</p>
+            <a href="#" class="button">Registrar Humor</a>
+        </div>
+
+        <div class="feature">
+            <h3>Histórias Inspiradoras</h3>
+            <p>Os usuários podem compartilhar e ler histórias reais de superação e resiliência, incentivando uns aos outros.</p>
+            <a href="#" class="button">Compartilhar História</a>
+        </div>
+
+        <div class="feature">
+            <h3>Sistema de Notificações</h3>
+            <p>Lembretes automáticos para praticar autocuidado, como "Beba água" ou "Tome um momento para respirar profundamente".</p>
+            <a href="#" class="button">Ativar Notificações</a>
+        </div>
+
+        <div class="feature">
+            <h3>Temas Personalizáveis</h3>
+            <p>Escolha entre diferentes paletas de cores para criar uma experiência visual personalizada e confortável.</p>
+            <a href="#" class="button">Selecionar Tema</a>
+        </div>
+
+        <div class="feature">
+            <h3>Botão de Ajuda 24h</h3>
+            <p>Conecte-se a um serviço de chat ao vivo ou envie
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melhorias - Como Lidar com as Emoções Parte 2</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="feature">
+            <h3>Ferramentas de Autocuidado</h3>
+            <p>Guias interativos de meditação, exercícios de respiração e relaxamento.</p>
+            <a href="#" class="button">Acessar Ferramentas</a>
+        </div>
+
+        <div class="feature">
+            <h3>Seção de Feedback</h3>
+            <form class="feedback-form">
+                <h4>Envie seu Feedback</h4>
+                <input type="text" placeholder="Seu nome" required>
+                <input type="email" placeholder="Seu e-mail" required>
+                <textarea placeholder="Deixe seu comentário" rows="4" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+
+        <div class="feature">
+            <h3>Botão de Ajuda 24h</h3>
+            <p>Conecte-se a um serviço de chat ao vivo ou envie uma mensagem para um voluntário capacitado.</p>
+            <a href="#" class="button">Solicitar Ajuda</a>
+        </div>
+
+        <div class="feature">
+            <h3>Informativos Sobre Deficiências Ocultas</h3>
+            <p>Entenda mais sobre o símbolo do cordão de girassóis e sua importância na identificação de deficiências ocultas, promovendo empatia e inclusão.</p>
+            <a href="#" class="button">Saiba Mais</a>
+        </div>
+
+        <div class="feature">
+            <h3>Recursos Educativos</h3>
+            <p>Explore materiais didáticos e interativos para ajudar a educar sobre saúde mental e inclusão.</p>
+            <a href="#" class="button">Acessar Recursos</a>
+        </div>
+    </div>
+</body>
+</html>
+<footer>
+    <p>Siga-nos:</p>
+    <a href="https://facebook.com"><img src="facebook-icon.png" alt="Facebook"></a>
+    <a href="https://twitter.com"><img src="twitter-icon.png" alt="Twitter"></a>
+    <a href="https://instagram.com"><img src="instagram-icon.png" alt="Instagram"></a>
+</footer>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#contact">Contato</a></li>
+    </ul>
+</div>
+<div class="rating">
+    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+<meta name="description" content="Um site para apoiar e informar sobre saúde mental, com recursos úteis e ferramentas interativas.">
+<meta name="keywords" content="saúde mental, apoio emocional, terapia, bem-estar">
+<meta name="author" content="Jaine Silva">
+<img src="image.webp" alt="Descrição" loading="lazy">
+          <h1 id="saudacao"></h1>
+
+<footer>
+    <div>
+        <p>&copy; 2025 Jaine Silva</p>
+        <a href="https://facebook.com">Facebook</a> | 
+        <a href="https://twitter.com">Twitter</a> | 
+        <a href="https://instagram.com">Instagram</a>
+    </div>
+    <div>
+        <p>Email: suporte@seusite.com</p>
+        <p>Telefone: (99) 9999-9999</p>
+    </div>
+</footer>
+<div id="chatbot">
+    <div id="chatbot-header">Precisa de ajuda? Fale conosco!</div>
+    <div id="chatbot-messages"></div>
+    <input type="text" id="chatbot-input" placeholder="Digite sua mensagem..." />
+    <button id="chatbot-send">Enviar</button>
+</div>
+<div id="score">Pontuação: 0</div>
+<canvas id="moodChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById("moodChart").getContext("2d");
+    const moodChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: ["Dia 1", "Dia 2", "Dia 3"],
+            datasets: [{
+                label: "Humor",
+                data: [3, 4, 5],
+                borderColor: "rgba(75, 192, 192, 1)",
+                fill: false,
+            }],
+        },
+    });
+</script>
+<div id="dashboard">
+    <h3>Seu Painel de Controle</h3>
+    <ul>
+        <li>Jogos concluídos: <span id="jogos">0</span></li>
+        <li>Pontuação total: <span id="pontuacao">0</span></li>
+        <li>Último registro de humor: <span id="ultimoHumor">-</span></li>
+    </ul>
+</div>
+<div class="search-bar">
+    <input type="text" id="search" placeholder="Busque por ferramentas, artigos ou serviços...">
+    <div id="search-suggestions"></div>
+</div>
+<button id="voice-command">🎤 Comando de Voz</button>
+<div id="quiz">
+    <p>Como você está se sentindo hoje?</p>
+    <button onclick="registrarResposta('bem')">😊 Bem</button>
+    <button onclick="registrarResposta('ok')">😐 Ok</button>
+    <button onclick="registrarResposta('mal')">😟 Mal</button>
+</div>
+<div id="quiz-feedback"></div>
+<p id="welcome"></p>
+<p id="description"></p>
+<select onchange="traduzir(this.value)">
+    <option value="pt">Português</option>
+    <option value="en">English</option>
+</select>
+<p id="users-online"></p>
+<div class="feature">
+    <h3>Sugestões de Apps Úteis</h3>
+    <p>
+        Inclua a tecnologia no seu dia a dia com apps que auxiliam na saúde mental e organização emocional:
+    </p>
+    <ul>
+        <li>Calm: App para meditação e técnicas de respiração guiada.</li>
+        <li>Headspace: Ferramenta para mindfulness e gerenciamento do estresse.</li>
+        <li>Todoist: Ajuda na organização de tarefas, diminuindo a sobrecarga mental.</li>
+        <li>Daylio: Um diário visual para registrar seu humor e atividades diárias.</li>
+        <li>MindShift CBT: Foco em reduzir ansiedade usando terapia cognitivo-comportamental.</li>
+    </ul>
+    <button class="button">Explorar Apps Recomendados</button>
+</div>
