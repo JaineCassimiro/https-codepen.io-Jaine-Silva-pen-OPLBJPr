@@ -1,0 +1,193 @@
+// Navegar para seções
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        console.error(`Seção com ID "${sectionId}" não encontrada.`);
+    }
+}
+
+// Chamar serviços de emergência
+function chamarEmergencia(numero) {
+    if (numero) {
+        const confirmar = confirm(`Você deseja realmente ligar para ${numero}?`);
+        if (confirmar) {
+            alert(`Ligando para ${numero}...`);
+            window.location.href = `tel:${numero}`;
+        }
+    } else {
+        console.error("Número de emergência não fornecido.");
+    }
+}
+
+// Mostrar mapa interativo com suporte à API
+function mostrarMapa() {
+    const mapa = document.getElementById('mapa');
+    if (mapa) {
+        const isHidden = mapa.style.display === 'none';
+        mapa.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) {
+            alert("Carregando mapa interativo...");
+            // Aqui você pode integrar a API do Google Maps ou outros serviços.
+        }
+    } else {
+        console.error("Elemento do mapa não encontrado.");
+    }
+}
+
+// Salvar preferência de tema no localStorage
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    const isDarkMode = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+}
+
+// Aplicar o tema salvo ao carregar a página
+window.onload = function () {
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+};
+const elements = document.querySelectorAll('.animate');
+window.addEventListener('scroll', () => {
+    elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+            element.classList.add('show');
+        }
+    });
+});
+document.querySelectorAll('.rating span').forEach((star, index) => {
+    star.addEventListener('click', () => {
+        console.log(`Você avaliou com ${5 - index} estrelas!`);
+    });
+});
+window.addEventListener('offline', () => {
+    alert('Você perdeu a conexão com a internet.');
+});
+window.addEventListener('online', () => {
+    alert('Você está online novamente.');
+});
+const hora = new Date().getHours();
+const saudacao = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+document.getElementById('saudacao').innerText = `${saudacao}, bem-vindo(a)!`;
+const messages = document.getElementById("chatbot-messages");
+const input = document.getElementById("chatbot-input");
+
+document.getElementById("chatbot-send").addEventListener("click", () => {
+    const userMessage = input.value;
+    if (userMessage.trim() === "") return;
+
+    const userBubble = document.createElement("div");
+    userBubble.textContent = userMessage;
+    userBubble.style.background = "#e0e0e0";
+    userBubble.style.margin = "5px 0";
+    messages.appendChild(userBubble);
+
+    const botBubble = document.createElement("div");
+    botBubble.textContent = "Recebemos sua mensagem! Em breve, um atendente responderá.";
+    botBubble.style.background = "#4caf50";
+    botBubble.style.margin = "5px 0";
+    botBubble.style.color = "#fff";
+    messages.appendChild(botBubble);
+
+    input.value = "";
+});
+let score = 0;
+
+function updateScore(points) {
+    score += points;
+    document.getElementById("score").innerText = `Pontuação: ${score}`;
+}
+
+// Exemplo de uso:
+updateScore(10); // Adiciona 10 pontos.
+navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    // Use essa informação para buscar serviços em APIs como Google Places.
+});
+const userProfile = {
+    name: "Usuário",
+    theme: "claro",
+};
+
+localStorage.setItem("profile", JSON.stringify(userProfile));
+
+const savedProfile = JSON.parse(localStorage.getItem("profile"));
+console.log(savedProfile.name); // Exibe o nome do usuário.
+function atualizarPainel(jogos, pontuacao, ultimoHumor) {
+    document.getElementById("jogos").innerText = jogos;
+    document.getElementById("pontuacao").innerText = pontuacao;
+    document.getElementById("ultimoHumor").innerText = ultimoHumor;
+}
+const suggestions = ["Meditação", "Jogos de Emoção", "CAPS", "Ferramentas de Autocuidado"];
+const searchInput = document.getElementById("search");
+const searchSuggestions = document.getElementById("search-suggestions");
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    searchSuggestions.innerHTML = suggestions
+        .filter(suggestion => suggestion.toLowerCase().includes(query))
+        .map(suggestion => `<div>${suggestion}</div>`)
+        .join("");
+});
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.lang = "pt-BR";
+
+recognition.onresult = (event) => {
+    const comando = event.results[0][0].transcript.toLowerCase();
+    if (comando.includes("abrir mapa")) {
+        mostrarMapa();
+    } else if (comando.includes("modo escuro")) {
+        toggleDarkMode();
+    }
+};
+
+document.getElementById("voice-command").addEventListener("click", () => {
+    recognition.start();
+});
+function lembreteInatividade() {
+    const ultimaInteracao = localStorage.getItem("ultimaInteracao") || Date.now();
+    const hoje = Date.now();
+
+    if (hoje - ultimaInteracao > 7 * 24 * 60 * 60 * 1000) {
+        alert("Sentimos sua falta! Venha explorar nossas ferramentas novamente.");
+    }
+}
+
+window.onload = () => {
+    lembreteInatividade();
+    localStorage.setItem("ultimaInteracao", Date.now());
+};
+function registrarResposta(resposta) {
+    const feedback = {
+        bem: "Que ótimo! Continue se cuidando.",
+        ok: "Entendido! Que tal explorar uma meditação hoje?",
+        mal: "Tudo bem sentir isso. Veja nossas ferramentas de apoio.",
+    };
+    document.getElementById("quiz-feedback").innerText = feedback[resposta];
+}
+function ativarModoZen() {
+    document.body.classList.toggle("zen-mode");
+}
+const translations = {
+    en: {
+        welcome: "Welcome!",
+        description: "Explore mental health tools.",
+    },
+    pt: {
+        welcome: "Bem-vindo!",
+        description: "Explore ferramentas de saúde mental.",
+    },
+};
+
+function traduzir(lingua) {
+    document.getElementById("welcome").innerText = translations[lingua].welcome;
+    document.getElementById("description").innerText = translations[lingua].description;
+}
+let usersOnline = Math.floor(Math.random() * 100) + 1; // Simulação
+document.getElementById("users-online").innerText = `${usersOnline} usuários online agora!`;
